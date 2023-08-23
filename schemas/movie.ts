@@ -8,6 +8,13 @@ export default defineType({
   icon,
   fields: [
     defineField({
+      name: 'orgId',
+      title: 'Organization ID',
+      type: 'string',
+      hidden: ({currentUser}) => !currentUser?.roles?.some((role) => role.name === 'administrator'),
+      readOnly: true,
+    }),
+    defineField({
       name: 'title',
       title: 'Title',
       type: 'string',
