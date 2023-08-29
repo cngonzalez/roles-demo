@@ -5,6 +5,7 @@ import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemas'
 import {RoleImageComponent} from './RoleImageComponent'
 // import {media} from 'sanity-plugin-media'
+import {structure} from './roleStructure'
 
 export default defineConfig({
   name: 'default',
@@ -14,7 +15,7 @@ export default defineConfig({
   dataset: 'production',
 
   plugins: [
-    deskTool(),
+    deskTool({structure}),
     visionTool(),
     // media(),
     //googleMapsInput(),
