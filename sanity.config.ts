@@ -44,7 +44,9 @@ export default defineConfig({
             id: `${type}-with-org`,
             schemaType: type,
             title: `New ${type}`,
-            value: {orgId},
+            value: {
+              orgReference: {_type: 'reference', _ref: orgId},
+            },
           }
         }),
       ]
