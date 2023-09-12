@@ -13,7 +13,6 @@ export const structure: StructureResolver = (S, context) => {
   const itemsWithRoleFilter = S.documentTypeListItems()
     .map((item) => {
       const schemaType = item.getSchemaType()?.name
-      console.log('schemaType', schemaType)
       return S.documentTypeListItem(schemaType).child(
         S.documentTypeList(schemaType)
           .filter('_type == $type && orgId == $role')
