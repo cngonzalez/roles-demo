@@ -16,7 +16,6 @@ export default defineType({
       title: 'Organization ID',
       type: 'string',
       hidden: ({currentUser}) => !currentUser?.roles?.some((role) => role.name === 'administrator'),
-      readOnly: true,
     }),
   ],
 })
