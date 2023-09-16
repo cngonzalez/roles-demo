@@ -15,7 +15,7 @@ const config = {
 
 const client = createClient({
   ...config,
-  apiVersion: '2021-03-25',
+  apiVersion: '2023-09-05',
   useCdn: false,
 })
 //unfortunately, this doesn't work in Safari.
@@ -68,7 +68,7 @@ export default defineConfig({
             schemaType: type,
             title: `New ${type}`,
             value: {
-              orgReference: {_type: 'reference', _ref: orgId},
+              orgReference: {_type: 'organization', _ref: orgId},
             },
           }
         }),
