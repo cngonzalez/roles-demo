@@ -15,7 +15,7 @@ export const structure: StructureResolver = (S, context) => {
       const schemaType = item.getSchemaType()?.name
       return S.documentTypeListItem(schemaType).child(
         S.documentTypeList(schemaType)
-          .filter('_type == $type && orgId == $role')
+          .filter('_type == $type && orgReference._ref == $role')
           .params({type: schemaType, role})
       )
     })

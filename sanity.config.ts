@@ -6,6 +6,29 @@ import {schemaTypes} from './schemas'
 import {RoleImageComponent} from './RoleImageComponent'
 // import {media} from 'sanity-plugin-media'
 import {structure} from './roleStructure'
+import {createClient} from '@sanity/client'
+
+const config = {
+  projectId: 'mpnns2jz',
+  dataset: 'production',
+}
+
+const client = createClient({
+  ...config,
+  apiVersion: '2023-09-05',
+  useCdn: false,
+})
+//unfortunately, this doesn't work in Safari.
+//Safari users will be limited to the initial config
+const currentUser = await client.request({
+  uri: '/users/me',
+  withCredentials: true,
+})
+
+const rolesForUser = currentUser?.roles?.map((role) => role.name)
+const orgForUser = await client.fetch(`*[_type == "organization" && orgId in $roles][0]._id`, {
+  roles: rolesForUser ?? [],
+})
 
 export default defineConfig({
   name: 'default',
@@ -30,7 +53,7 @@ export default defineConfig({
       if (isAdmin) {
         return prev
       }
-      const orgId = currentUser?.roles?.[0]?.name
+      const orgId = orgForUser
       //if they're in an org, filter out the "default" templates, so we ALWAYS
       //create documents with our org id
       const filteredTemplates = prev.filter((template) => {
@@ -44,7 +67,9 @@ export default defineConfig({
             id: `${type}-with-org`,
             schemaType: type,
             title: `New ${type}`,
-            value: {orgId},
+            value: {
+              orgReference: {_type: 'organization', _ref: orgId},
+            },
           }
         }),
       ]

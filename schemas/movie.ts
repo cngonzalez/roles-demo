@@ -15,6 +15,12 @@ export default defineType({
       readOnly: true,
     }),
     defineField({
+      name: 'orgReference',
+      title: 'Organization Reference',
+      type: 'reference',
+      to: [{type: 'organization'}],
+    }),
+    defineField({
       name: 'title',
       title: 'Title',
       type: 'string',
